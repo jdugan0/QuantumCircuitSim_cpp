@@ -3,7 +3,6 @@
 #include <random>
 #include <unsupported/Eigen/KroneckerProduct>
 #include <variant>
-#include <vector>
 
 struct Gate {
   Mat2 u;

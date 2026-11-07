@@ -1,4 +1,3 @@
-#include "Circuit.h"
 #include "Examples.h"
 void printState(const Eigen::VectorXcd &state) {
   for (size_t i = 0; i < state.size(); i++) {
@@ -7,5 +6,5 @@ void printState(const Eigen::VectorXcd &state) {
 }
 int main() {
   // Add your circuit here:
-  printf("Result: %d\n", DeutschExample().measurements[0]);
+  printf("Result: %d\n", Examples::DeutschExample().measurements[0]);
 }

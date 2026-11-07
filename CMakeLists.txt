@@ -16,5 +16,6 @@ FetchContent_MakeAvailable(Eigen)
 add_executable(QuantumCircuitSim
     src/main.cpp
     src/Circuit.cpp
+    src/Examples.cpp
 )
 target_link_libraries(QuantumCircuitSim PRIVATE Eigen3::Eigen)

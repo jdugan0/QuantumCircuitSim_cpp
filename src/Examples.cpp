@@ -1,5 +1,5 @@
 #include "Examples.h"
-RunResult DeutschExample() {
+RunResult Examples::DeutschExample() {
   Circuit c{};
   // adds 2 wires, in states |0> and |1>.
   c.addWire(std::vector<Vec2>{ZERO, ONE});
@@ -11,3 +11,5 @@ RunResult DeutschExample() {
   // prints the first (and only) measurement performed.
   return r;
 }
+RunResult Examples::SimonExample() { return RunResult{}; }
+RunResult Examples::ShorExample() { return RunResult{}; }

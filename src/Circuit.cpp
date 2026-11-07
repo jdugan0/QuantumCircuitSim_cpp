@@ -6,7 +6,23 @@ void Circuit::addWire(const Vec2 &w) {
   }
   initalState = Eigen::kroneckerProduct(initalState, w).eval();
 }
+void Circuit::addWire(const Vec2 &w, int amount) {
+  for (int i = 0; i < amount; i++) {
+    addWire(w);
+  }
+}
+void Circuit::addWire(const std::vector<Vec2> &w) {
+  for (size_t i = 0; i < w.size(); i++) {
+    addWire(w[i]);
+  }
+}
 void Circuit::addOp(const Op &op) { ops.push_back(op); }
+void Circuit::addOp(const std::vector<Op> &op) {
+  for (size_t i = 0; i < op.size(); i++) {
+    addOp(op[i]);
+  }
+}
+
 RunResult Circuit::compute() {
   Eigen::VectorXcd state = initalState;
   std::vector<int> measurements{};

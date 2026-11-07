@@ -22,6 +22,11 @@ struct Circuit {
   Eigen::VectorXcd initalState{};
   std::vector<Op> ops{};
   void addWire(const Vec2 &w);
+  void addWire(const std::vector<Vec2> &w);
+  void addWire(const Vec2 &w, int amount);
   void addOp(const Op &op);
+  void addOp(const std::vector<Op> &op);
   RunResult compute();
 };
+
+namespace Circuits {};

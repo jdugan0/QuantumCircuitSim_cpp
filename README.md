@@ -17,10 +17,10 @@ U\begin{pmatrix} \alpha_{000} \\ \alpha_{001} \end{pmatrix}
 U\begin{pmatrix} \alpha_{010} \\ \alpha_{011} \end{pmatrix}
 ```
 ```math
-$U\begin{pmatrix} \alpha_{100} \\ \alpha_{101} \end{pmatrix}$
+U\begin{pmatrix} \alpha_{100} \\ \alpha_{101} \end{pmatrix}
 ```
 ```math
-$U\begin{pmatrix} \alpha_{110} \\ \alpha_{111} \end{pmatrix}$
+U\begin{pmatrix} \alpha_{110} \\ \alpha_{111} \end{pmatrix}
 ```
 
 A circuit is a list of operations that are applied sequentially. A circuit can be created and computed like so:

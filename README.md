@@ -10,13 +10,18 @@ While I have not tested on other operating systems, the code should still compil
 The state of a circuit is represented by a single vector in $\mathbb{C}^{(2^n)}$. Each wire you add will multiply the dimension of the state by 2. 
 A gate can be applied to a single Qbit by applying that gate to all independent pairs of Qbits in that state. For example, in a 3 Qbit state, if we want to apply a gate $U$ to bit 0, we would apply that gate independently to each pair as so:
 
-$U\begin{pmatrix} \alpha_{000} \\ \alpha_{001} \end{pmatrix}$
-
-$U\begin{pmatrix} \alpha_{010} \\ \alpha_{011} \end{pmatrix}$
-
+```math
+U\begin{pmatrix} \alpha_{000} \\ \alpha_{001} \end{pmatrix}
+```
+```math
+U\begin{pmatrix} \alpha_{010} \\ \alpha_{011} \end{pmatrix}
+```
+```math
 $U\begin{pmatrix} \alpha_{100} \\ \alpha_{101} \end{pmatrix}$
-
+```
+```math
 $U\begin{pmatrix} \alpha_{110} \\ \alpha_{111} \end{pmatrix}$
+```
 
 A circuit is a list of operations that are applied sequentially. A circuit can be created and computed like so:
 ```c++

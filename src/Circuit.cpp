@@ -4,7 +4,7 @@ void Circuit::addWire(const Vec2 &w) {
     initalState = w;
     return;
   }
-  initalState = Eigen::kroneckerProduct(initalState, w).eval();
+  initalState = Eigen::kroneckerProduct(w, initalState).eval();
 }
 void Circuit::addWire(const Vec2 &w, int amount) {
   for (int i = 0; i < amount; i++) {
@@ -74,6 +74,7 @@ RunResult Circuit::compute() {
           }
         }
         measurements.push_back(1);
+        state /= std::sqrt(prob);
       } else {
         for (size_t k = 0; k < state.size(); k++) {
           if ((mask & k)) {
@@ -81,9 +82,26 @@ RunResult Circuit::compute() {
           }
         }
         measurements.push_back(0);
+        state /= std::sqrt(1 - prob);
       }
-      state /= std::sqrt(prob);
     }
   }
   return RunResult{state, measurements};
+}
+
+
+const std::vector<Op> Circuits::U_f0(int x, int y) { return {}; };
+const std::vector<Op> Circuits::U_f1(int x, int y) { return {Gate{Gates::X, y, {x}}}; }
+const std::vector<Op> Circuits::U_f2(int x, int y) {
+  return {Gate{Gates::X, y, {}}, Gate{Gates::X, y, {x}}};
+}
+const std::vector<Op> Circuits::U_f3(int x, int y) { return {Gate{Gates::X, y, {}}}; }
+
+const std::vector<Op> Circuits::Deutsch(int x, int y, std::vector<Op> U_f) {
+  std::vector<Op> v = {{Gate{Gates::H, x}}, {Gate{Gates::H, y}}};
+  v.insert(v.end(), U_f.begin(), U_f.end());
+  v.push_back({Gate{Gates::H, x}});
+  v.push_back({Gate{Gates::H, y}});
+  v.push_back({Measure{x}});
+  return v;
 }

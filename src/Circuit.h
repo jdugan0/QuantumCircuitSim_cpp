@@ -8,7 +8,7 @@
 struct Gate {
   Mat2 u;
   int target;
-  std::vector<int> controls;
+  std::vector<int> controls{};
 };
 struct Measure {
   int target;
@@ -29,4 +29,11 @@ struct Circuit {
   RunResult compute();
 };
 
-namespace Circuits {};
+namespace Circuits {
+const std::vector<Op> U_f0(int x, int y);
+const std::vector<Op> U_f1(int x, int y);
+const std::vector<Op> U_f2(int x, int y);
+const std::vector<Op> U_f3(int x, int y);
+
+const std::vector<Op> Deutsch(int x, int y, std::vector<Op> U_f);
+}; // namespace Circuits

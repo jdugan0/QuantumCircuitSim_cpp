@@ -6,6 +6,7 @@ void printState(const Eigen::VectorXcd &state) {
   }
 }
 int main() {
+  // Deutsch example code, replace with your circuit.
   Circuit c{};
   c.addWire(ZERO);
   c.addWire(ONE);

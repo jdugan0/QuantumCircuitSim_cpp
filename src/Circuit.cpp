@@ -16,7 +16,7 @@ Eigen::VectorXcd Circuit::compute() {
     if (std::holds_alternative<Gate>(op)) {
       const Gate &gate = std::get<Gate>(op);
       int target = gate.target;
-      // iterate over all pairs of qbits, ignoring the one we care about.
+      // iterate over all pairs of qbits
       for (int p = 0; p < count >> 1; p++) {
         size_t mask = (size_t(1) << target) - 1;     // ones in bits 0..target-1
         size_t j0 = ((p & ~mask) << 1) | (p & mask); // bit target = 0

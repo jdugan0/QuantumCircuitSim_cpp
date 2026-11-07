@@ -10,6 +10,5 @@ int main() {
   Circuit c{};
   c.addWire(Vec2{ZERO});
   c.addOp(Gate{Gates::H, 0, {}});
-  c.initalizeState();
   printState(c.compute());
 }

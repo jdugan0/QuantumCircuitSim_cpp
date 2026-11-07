@@ -1,14 +1,11 @@
 #include "Circuit.h"
 
-void Circuit::addWire(const Vec2 &w) { initalStates.push_back(w); }
-void Circuit::initalizeState() {
-  if (initalStates.size() == 0) {
+void Circuit::addWire(const Vec2 &w) {
+  if (initalState.size() == 0) {
+    initalState = w;
     return;
   }
-  initalState = initalStates[0];
-  for (size_t i = 1; i < initalStates.size(); i++) {
-    initalState = Eigen::kroneckerProduct(initalState, initalStates[i]).eval();
-  }
+  initalState = Eigen::kroneckerProduct(initalState, w).eval();
 }
 void Circuit::addOp(const Op &op) { ops.push_back(op); }
 Eigen::VectorXcd Circuit::compute() {
@@ -26,6 +23,7 @@ Eigen::VectorXcd Circuit::compute() {
         size_t j1 = j0 | (size_t(1) << target);      // bit target = 1
         Vec2 temp_state{state[j0], state[j1]};
         Vec2 Utemp_state = gate.u * temp_state;
+
         state[j0] = Utemp_state[0];
         state[j1] = Utemp_state[1];
       }

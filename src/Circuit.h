@@ -15,11 +15,9 @@ struct Measure {
 };
 using Op = std::variant<Gate, Measure>;
 struct Circuit {
-  std::vector<Vec2> initalStates{};
   Eigen::VectorXcd initalState{};
   std::vector<Op> ops{};
   void addWire(const Vec2 &w);
-  void initalizeState();
   void addOp(const Op &op);
   Eigen::VectorXcd compute();
 };

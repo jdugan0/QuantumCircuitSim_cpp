@@ -54,4 +54,4 @@ c.addOp(Circuits::Deutsch(0, 1, Circuits::U_f3(0, 1))); // performs Deutsch's al
 ## Credits
 Eigen 5.0.1 is used for matrix math. 
 
-All code in this project was written by me (Justin Dugan). 
+All code in this project was written by me (Justin Dugan). No AI was used.

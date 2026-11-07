@@ -1,5 +1,4 @@
 #include "Circuit.h"
-#include <stdio.h>
 
 void printState(const Eigen::VectorXcd &state) {
   for (size_t i = 0; i < state.size(); i++) {
@@ -12,5 +11,10 @@ int main() {
   c.addWire(Vec2{ZERO});
   c.addOp(Gate{Gates::H, 0, {}});
   c.addOp(Gate{Gates::X, 1, {0}});
-  printState(c.compute());
+  c.addOp(Measure{0});
+  int total = 0;
+  for (int i = 0; i < 10000; i++){
+    total += c.compute().measurements[0];
+  }
+  printf("prob: %0.02f\n", total / 10000.0);
 }

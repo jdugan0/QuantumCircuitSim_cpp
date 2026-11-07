@@ -1,5 +1,6 @@
 #pragma once
 #include "defs.h"
+#include <random>
 #include <unsupported/Eigen/KroneckerProduct>
 #include <variant>
 #include <vector>
@@ -11,7 +12,10 @@ struct Gate {
 };
 struct Measure {
   int target;
-  int cbit;
+};
+struct RunResult {
+  Eigen::VectorXcd state{};
+  std::vector<int> measurements{};
 };
 using Op = std::variant<Gate, Measure>;
 struct Circuit {
@@ -19,5 +23,5 @@ struct Circuit {
   std::vector<Op> ops{};
   void addWire(const Vec2 &w);
   void addOp(const Op &op);
-  Eigen::VectorXcd compute();
+  RunResult compute();
 };

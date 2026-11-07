@@ -2,6 +2,7 @@
 #include <Eigen/Dense>
 #include <cmath>
 #include <complex>
+#include <stdio.h>
 using Mat2 = Eigen::Matrix<std::complex<double>, 2, 2>;
 using Vec2 = Eigen::Matrix<std::complex<double>, 2, 1>;
 using namespace std::complex_literals;

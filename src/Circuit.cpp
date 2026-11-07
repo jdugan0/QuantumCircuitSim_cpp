@@ -1,5 +1,4 @@
 #include "Circuit.h"
-
 void Circuit::addWire(const Vec2 &w) {
   if (initalState.size() == 0) {
     initalState = w;
@@ -8,8 +7,9 @@ void Circuit::addWire(const Vec2 &w) {
   initalState = Eigen::kroneckerProduct(initalState, w).eval();
 }
 void Circuit::addOp(const Op &op) { ops.push_back(op); }
-Eigen::VectorXcd Circuit::compute() {
+RunResult Circuit::compute() {
   Eigen::VectorXcd state = initalState;
+  std::vector<int> measurements{};
   size_t count = state.size();
   for (size_t i = 0; i < ops.size(); i++) {
     const Op &op = ops[i];
@@ -23,7 +23,7 @@ Eigen::VectorXcd Circuit::compute() {
         size_t j1 = j0 | (size_t(1) << target);      // bit target = 1
         bool skip = false;
         for (size_t t = 0; t < gate.controls.size(); t++) {
-          if ((1 << gate.controls[t]) & j0 == 0) {
+          if (((1 << gate.controls[t]) & j0) == 0) {
             skip = true;
             break;
           }
@@ -38,8 +38,36 @@ Eigen::VectorXcd Circuit::compute() {
         state[j1] = Utemp_state[1];
       }
     } else {
-      const Measure &gate = std::get<Measure>(op);
+      const Measure &m = std::get<Measure>(op);
+      int mask = 1 << m.target;
+      double prob = 0;
+      for (size_t k = 0; k < state.size(); k++) {
+        if (mask & k) {
+          prob += Prob(state[k]);
+        }
+      }
+      // generate value
+      std::random_device rd;
+      std::mt19937 gen(rd());
+      std::uniform_real_distribution<double> dist(0.0, 1.0);
+      double random_num = dist(gen);
+      if (random_num < prob) {
+        for (size_t k = 0; k < state.size(); k++) {
+          if (!(mask & k)) {
+            state[k] = 0;
+          }
+        }
+        measurements.push_back(1);
+      } else {
+        for (size_t k = 0; k < state.size(); k++) {
+          if ((mask & k)) {
+            state[k] = 0;
+          }
+        }
+        measurements.push_back(0);
+      }
+      state /= std::sqrt(prob);
     }
   }
-  return state;
+  return RunResult{state, measurements};
 }

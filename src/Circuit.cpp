@@ -21,6 +21,16 @@ Eigen::VectorXcd Circuit::compute() {
         size_t mask = (size_t(1) << target) - 1;     // ones in bits 0..target-1
         size_t j0 = ((p & ~mask) << 1) | (p & mask); // bit target = 0
         size_t j1 = j0 | (size_t(1) << target);      // bit target = 1
+        bool skip = false;
+        for (size_t t = 0; t < gate.controls.size(); t++) {
+          if ((1 << gate.controls[t]) & j0 == 0) {
+            skip = true;
+            break;
+          }
+        }
+        if (skip) {
+          continue;
+        }
         Vec2 temp_state{state[j0], state[j1]};
         Vec2 Utemp_state = gate.u * temp_state;
 

@@ -9,6 +9,8 @@ void printState(const Eigen::VectorXcd &state) {
 int main() {
   Circuit c{};
   c.addWire(Vec2{ZERO});
+  c.addWire(Vec2{ZERO});
   c.addOp(Gate{Gates::H, 0, {}});
+  c.addOp(Gate{Gates::X, 1, {0}});
   printState(c.compute());
 }
